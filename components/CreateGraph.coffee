@@ -10,10 +10,16 @@ class CreateGraph extends noflo.Component
 
     @inPorts.details.on 'data', (details) =>
       graph = new noflo.Graph details.name
-      graph.properties.environment =
-        runtime: details.type
+      graph.setProperties @normalizeProps details
       @outPorts.out.send graph
     @inPorts.details.on 'disconnect', =>
       @outPorts.out.disconnect()
 
-pxports.getComponent = -> new CreateGraph
+  normalizeProps: (details) ->
+    if details.type
+      details.environment =
+        runtime: details.type
+      delete details.type
+    details
+
+exports.getComponent = -> new CreateGraph
