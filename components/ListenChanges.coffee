@@ -23,3 +23,5 @@ exports.getComponent = ->
   c.outPorts.add 'out'
 
   c.shutdown = unsubscribe
+
+  c
