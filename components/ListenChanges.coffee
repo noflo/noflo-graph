@@ -18,7 +18,7 @@ exports.getComponent = ->
 
     # Start listening to the new one
     c.graph = payload
-    c.graph.addListener 'endTransaction', listenTransactions
+    c.graph.on 'endTransaction', listenTransactions
 
   c.outPorts.add 'out'
 
