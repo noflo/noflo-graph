@@ -11,6 +11,7 @@
   },
   "scripts": [
     "components/CreateGraph.coffee",
+    "components/ListenChanges.coffee",
     "components/LoadJson.coffee",
     "index.js"
   ],
@@ -20,6 +21,7 @@
   "noflo": {
     "components": {
       "CreateGraph": "components/CreateGraph.coffee",
+      "ListenChanges": "components/ListenChanges.coffee",
       "LoadJson": "components/LoadJson.coffee"
     }
   }
