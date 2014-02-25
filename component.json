@@ -13,6 +13,7 @@
     "components/CreateGraph.coffee",
     "components/ListenChanges.coffee",
     "components/LoadJson.coffee",
+    "components/SetPropertyValue.coffee",
     "index.js"
   ],
   "json": [
@@ -22,7 +23,8 @@
     "components": {
       "CreateGraph": "components/CreateGraph.coffee",
       "ListenChanges": "components/ListenChanges.coffee",
-      "LoadJson": "components/LoadJson.coffee"
+      "LoadJson": "components/LoadJson.coffee",
+      "SetPropertyValue": "components/SetPropertyValue.coffee"
     }
   }
 }
