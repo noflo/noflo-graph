@@ -12,6 +12,7 @@
   "scripts": [
     "components/CreateGraph.coffee",
     "components/ListenChanges.coffee",
+    "components/LoadGraph.coffee",
     "components/LoadJson.coffee",
     "components/SetPropertyValue.coffee",
     "index.js"
@@ -23,6 +24,7 @@
     "components": {
       "CreateGraph": "components/CreateGraph.coffee",
       "ListenChanges": "components/ListenChanges.coffee",
+      "LoadGraph": "components/LoadGraph.coffee",
       "LoadJson": "components/LoadJson.coffee",
       "SetPropertyValue": "components/SetPropertyValue.coffee"
     }
