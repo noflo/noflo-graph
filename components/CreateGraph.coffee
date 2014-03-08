@@ -18,7 +18,7 @@ class CreateGraph extends noflo.Component
   normalizeProps: (details) ->
     if details.type
       details.environment =
-        runtime: details.type
+        type: details.type
       delete details.type
     details
 
