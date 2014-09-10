@@ -16,6 +16,9 @@ exports.getComponent = ->
     # Stop listening to the previous one
     do unsubscribe
 
+    return unless typeof payload is 'object'
+    return unless typeof payload.on is 'function'
+
     # Start listening to the new one
     c.graph = payload
     c.graph.on 'endTransaction', listenTransactions
