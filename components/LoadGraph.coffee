@@ -24,14 +24,22 @@ class LoadGraph extends noflo.Component
   toGraph: (data) ->
     if data.indexOf('->') isnt -1
       try
-        noflo.graph.loadFBP data, (graph) =>
+        noflo.graph.loadFBP data, (err, graph) =>
+          if err
+            @outPorts.error.send e
+            @outPorts.error.disconnect()
+            return
           @outPorts.out.send graph
       catch e
         @outPorts.error.send e
         @outPorts.error.disconnect()
       return
     try
-      noflo.graph.loadJSON data, (graph) =>
+      noflo.graph.loadJSON data, (err, graph) =>
+        if err
+          @outPorts.error.send e
+          @outPorts.error.disconnect()
+          return
         @outPorts.out.send graph
     catch e
       @outPorts.error.send e

@@ -7,9 +7,14 @@ class LoadJson extends noflo.Component
       in: new noflo.Port 'object'
     @outPorts =
       out: new noflo.Port 'object'
+      error: new noflo.Port 'object'
 
     @inPorts.in.on 'data', (data) =>
-      noflo.graph.loadJSON data, (graph) =>
+      noflo.graph.loadJSON data, (err, graph) =>
+        if err
+          @outPorts.error.send e
+          @outPorts.error.disconnect()
+          return
         if (data.id and graph.properties.id isnt data.id) or (data.project and graph.properties.project isnt data.project)
           graph.setProperties
             id: data.id
