@@ -21,7 +21,7 @@
     "grunt-mocha-test": "^0.13.2",
     "grunt-coffeelint": "^0.0.15",
     "grunt-contrib-coffee": "^1.0.0",
-    "grunt-contrib-uglify": "^1.0.1",
+    "grunt-contrib-uglify": "^2.0.0",
     "grunt-contrib-watch": "^1.0.0",
     "grunt-mocha-phantomjs": "^4.0.0",
     "grunt-noflo-browser": "^1.0.1",
