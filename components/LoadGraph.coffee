@@ -1,48 +1,25 @@
 noflo = require 'noflo'
 
-class LoadGraph extends noflo.Component
-  description: 'Load a JSON or FBP string into a NoFlo graph'
-  constructor: ->
-    @inPorts = new noflo.InPorts
-      in:
-        datatype: 'string'
-        required: true
-    @outPorts = new noflo.OutPorts
-      out:
-        datatype: 'object'
-        required: true
-      error:
-        datatype: 'object'
-        required: 'false'
-
-    @inPorts.in.on 'data', (data) =>
-      @toGraph data
-
-    @inPorts.in.on 'disconnect', =>
-      @outPorts.out.disconnect()
-
-  toGraph: (data) ->
-    if data.indexOf('->') isnt -1
-      try
-        noflo.graph.loadFBP data, (err, graph) =>
-          if err
-            @outPorts.error.send e
-            @outPorts.error.disconnect()
-            return
-          @outPorts.out.send graph
-      catch e
-        @outPorts.error.send e
-        @outPorts.error.disconnect()
+exports.getComponent = ->
+  c = new noflo.Component
+  c.description = 'Load a JSON or FBP string into a NoFlo graph'
+  c.inPorts.add 'in',
+    datatype: 'string'
+  c.outPorts.add 'out',
+    datatype: 'object'
+  c.outPorts.add 'error',
+    datatype: 'object'
+  c.process (input, output) ->
+    return unless input.hasData 'in'
+    source = input.getData 'in'
+    if source.indexOf('->') isnt -1
+      # FBP file
+      noflo.graph.loadFBP source, (err, graph) ->
+        return output.done err if err
+        output.sendDone
+          out: graph
       return
-    try
-      noflo.graph.loadJSON data, (err, graph) =>
-        if err
-          @outPorts.error.send e
-          @outPorts.error.disconnect()
-          return
-        @outPorts.out.send graph
-    catch e
-      @outPorts.error.send e
-      @outPorts.error.disconnect()
-
-exports.getComponent = -> new LoadGraph
+    noflo.graph.loadJSON source, (err, graph) ->
+      return output.done err if err
+      output.sendDone
+        out: graph
