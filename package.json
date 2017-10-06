@@ -12,7 +12,7 @@
   },
   "license": "MIT",
   "dependencies": {
-    "noflo": "0.x >= 0.5"
+    "noflo": "0.x >= 0.8"
   },
   "devDependencies": {
     "chai": "^4.0.0",
@@ -27,21 +27,11 @@
     "grunt-mocha-phantomjs": "^4.0.0",
     "grunt-mocha-test": "^0.13.2",
     "grunt-noflo-browser": "^1.0.1",
-    "grunt-noflo-manifest": "^0.1.12",
     "json-loader": "^0.5.4",
     "mocha": "^4.0.0"
   },
   "scripts": {
     "test": "grunt test"
-  },
-  "noflo": {
-    "components": {
-      "CreateGraph": "components/CreateGraph.coffee",
-      "ListenChanges": "components/ListenChanges.coffee",
-      "LoadGraph": "components/LoadGraph.coffee",
-      "LoadJson": "components/LoadJson.coffee",
-      "SetPropertyValue": "components/SetPropertyValue.coffee"
-    }
   },
   "keywords": [
     "noflo"

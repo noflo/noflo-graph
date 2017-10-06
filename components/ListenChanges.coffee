@@ -3,28 +3,28 @@ noflo = require 'noflo'
 exports.getComponent = ->
   c = new noflo.Component
   c.description = 'Listen for finished change transctions on a graph'
-
-  listenTransactions = ->
-    c.outPorts.out.send c.graph
-
+  c.inPorts.add 'in',
+    datatype: 'object'
+  c.outPorts.add 'out',
+    datatype: 'object'
+  c.outPorts.add 'error',
+    datatype: 'object'
+  c.graph = null
   unsubscribe = ->
-    c.graph.removeListener 'endTransaction', listenTransactions if c.graph
-    c.outPorts.out.disconnect()
-
-  c.inPorts.add 'in', (event, payload) ->
-    return unless event is 'data'
-    # Stop listening to the previous one
+    return unless c.graph
+    c.graph.graph.removeListener 'endTransaction', c.graph.listener
+    c.graph.context.deactivate()
+    c.graph = null
+  c.tearDown = (callback) ->
     do unsubscribe
-
-    return unless typeof payload is 'object'
-    return unless typeof payload.on is 'function'
-
-    # Start listening to the new one
-    c.graph = payload
-    c.graph.on 'endTransaction', listenTransactions
-
-  c.outPorts.add 'out'
-
-  c.shutdown = unsubscribe
-
-  c
+    do callback
+  c.process (input, output, context) ->
+    return unless input.hasData 'in'
+    graph = input.getData 'in'
+    c.graph =
+      graph: graph
+      listener: (event) ->
+        output.send
+          out: c.graph.graph
+      context: context
+    graph.on 'endTransaction', c.graph.listener

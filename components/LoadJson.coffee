@@ -1,27 +1,26 @@
 noflo = require 'noflo'
 
-class LoadJson extends noflo.Component
-  description: 'Convert a Graph JSON structure into a NoFlo Graph'
-  constructor: ->
-    @inPorts =
-      in: new noflo.Port 'object'
-    @outPorts =
-      out: new noflo.Port 'object'
-      error: new noflo.Port 'object'
+noflo = require 'noflo'
 
-    @inPorts.in.on 'data', (data) =>
-      noflo.graph.loadJSON data, (err, graph) =>
-        if err
-          @outPorts.error.send e
-          @outPorts.error.disconnect()
-          return
-        if (data.id and graph.properties.id isnt data.id) or (data.project and graph.properties.project isnt data.project)
-          graph.setProperties
-            id: data.id
-            project: data.project
-        @outPorts.out.send graph
+exports.getComponent = ->
+  c = new noflo.Component
+  c.description = 'Convert a Graph JSON structure into a NoFlo Graph'
+  c.inPorts.add 'in',
+    datatype: 'object'
+  c.outPorts.add 'out',
+    datatype: 'object'
+  c.outPorts.add 'error',
+    datatype: 'object'
+  c.process (input, output) ->
+    return unless input.hasData 'in'
+    source = input.getData 'in'
+    noflo.graph.loadJSON source, (err, graph) ->
+      return output.done err if err
 
-    @inPorts.in.on 'disconnect', =>
-      @outPorts.out.disconnect()
+      if (source.id and graph.properties.id isnt source.id) or (source.project and graph.properties.project isnt source.project)
+        graph.setProperties
+          id: source.id
+          project: source.project
 
-exports.getComponent = -> new LoadJson
+      output.sendDone
+        out: graph
