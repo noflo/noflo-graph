@@ -1,7 +1,5 @@
 noflo = require 'noflo'
 
-noflo = require 'noflo'
-
 exports.getComponent = ->
   c = new noflo.Component
   c.description = 'Convert a Graph JSON structure into a NoFlo Graph'
