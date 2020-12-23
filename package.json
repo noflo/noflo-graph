@@ -15,8 +15,8 @@
     "noflo": "^1.0.0"
   },
   "devDependencies": {
-    "fbp-spec": "^0.7.1",
-    "noflo-nodejs": "^0.13.0"
+    "fbp-spec": "^0.8.0",
+    "noflo-nodejs": "^0.15.0"
   },
   "scripts": {
     "test": "fbp-spec --secret test --address ws://localhost:3333 --command 'noflo-nodejs --port 3333 --secret test --open false' spec/*.yaml"
