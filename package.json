@@ -12,23 +12,21 @@
   },
   "license": "MIT",
   "dependencies": {
-    "noflo": "^1.0.0"
+    "noflo": "^1.4.0"
   },
   "devDependencies": {
-    "chai": "^4.0.0",
-    "grunt": "^1.0.1",
-    "grunt-coffeelint": "^0.0.16",
-    "grunt-contrib-coffee": "^2.0.0",
-    "grunt-contrib-watch": "^1.0.0",
-    "grunt-mocha-phantomjs": "^4.0.0",
-    "grunt-mocha-test": "^0.13.2",
-    "grunt-noflo-browser": "^1.5.0",
-    "mocha": "^5.0.0"
+    "eslint": "^7.16.0",
+    "eslint-config-airbnb-base": "^14.2.1",
+    "eslint-plugin-import": "^2.22.1",
+    "fbp-spec": "^0.8.0",
+    "noflo-nodejs": "^0.15.0"
   },
   "scripts": {
-    "test": "grunt test"
+    "pretest": "eslint components",
+    "test": "fbp-spec --secret test --address ws://localhost:3333 --command 'noflo-nodejs --port 3333 --secret test --open false' spec/*.yaml"
   },
   "keywords": [
-    "noflo"
+    "noflo",
+    "ecosystem:noflo"
   ]
 }

@@ -1,0 +1,22 @@
+topic: 'graph/LoadJson'
+cases:
+  -
+    name: 'Receiving a basic JSON graph'
+    assertion: 'should produce a Graph object'
+    inputs:
+      in:
+        properties:
+          name: 'Foo'
+        inports: {}
+        outports: {}
+        groups: []
+        processes: {}
+        connections: []
+    expect:
+      out:
+        -
+          path: '$.caseSensitive'
+          equals: false
+        -
+          path: '$.properties.name'
+          equals: 'Foo'
