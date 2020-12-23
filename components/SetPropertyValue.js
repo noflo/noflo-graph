@@ -1,12 +1,6 @@
-/*
- * decaffeinate suggestions:
- * DS101: Remove unnecessary use of Array.from
- * DS102: Remove unnecessary code created because of implicit returns
- * Full docs: https://github.com/decaffeinate/decaffeinate/blob/master/docs/suggestions.md
- */
 const noflo = require('noflo');
 
-exports.getComponent = function () {
+exports.getComponent = () => {
   const c = new noflo.Component();
   c.inPorts.add('property',
     { datatype: 'string' });
@@ -20,7 +14,7 @@ exports.getComponent = function () {
     { datatype: 'object' });
   return c.process((input, output) => {
     if (!input.hasData('property', 'value', 'in')) { return; }
-    const [property, value, graph] = Array.from(input.getData('property', 'value', 'in'));
+    const [property, value, graph] = input.getData('property', 'value', 'in');
 
     if (typeof graph.setProperties !== 'function') {
       output.done(new Error('Provided graph is not a Graph object'));
@@ -31,6 +25,6 @@ exports.getComponent = function () {
     props[property] = value;
     graph.setProperties(props);
 
-    return output.sendDone({ out: graph });
+    output.sendDone({ out: graph });
   });
 };

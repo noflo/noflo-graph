@@ -1,11 +1,6 @@
-/*
- * decaffeinate suggestions:
- * DS102: Remove unnecessary code created because of implicit returns
- * Full docs: https://github.com/decaffeinate/decaffeinate/blob/master/docs/suggestions.md
- */
 const noflo = require('noflo');
 
-exports.getComponent = function () {
+exports.getComponent = () => {
   const c = new noflo.Component();
   c.description = 'Load a JSON or FBP string into a NoFlo graph';
   c.inPorts.add('in',
@@ -17,17 +12,16 @@ exports.getComponent = function () {
   return c.process((input, output) => {
     if (!input.hasData('in')) { return; }
     const source = input.getData('in');
+    let promise;
     if (source.indexOf('->') !== -1) {
       // FBP file
-      noflo.graph.loadFBP(source, (err, graph) => {
-        if (err) { return output.done(err); }
-        return output.sendDone({ out: graph });
-      });
-      return;
+      promise = noflo.graph.loadFBP(source);
+    } else {
+      promise = noflo.graph.loadJSON(source);
     }
-    return noflo.graph.loadJSON(source, (err, graph) => {
-      if (err) { return output.done(err); }
-      return output.sendDone({ out: graph });
-    });
+    promise
+      .then((graph) => {
+        output.sendDone({ out: graph });
+      }, output.done);
   });
 };

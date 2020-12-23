@@ -1,11 +1,6 @@
-/*
- * decaffeinate suggestions:
- * DS102: Remove unnecessary code created because of implicit returns
- * Full docs: https://github.com/decaffeinate/decaffeinate/blob/master/docs/suggestions.md
- */
 const noflo = require('noflo');
 
-exports.getComponent = function () {
+exports.getComponent = () => {
   const c = new noflo.Component();
   c.description = 'Create a NoFlo Graph instance';
   c.inPorts.add('details',
@@ -21,6 +16,6 @@ exports.getComponent = function () {
     }
     const graph = new noflo.Graph(details.name);
     graph.setProperties(details);
-    return output.sendDone({ out: graph });
+    output.sendDone({ out: graph });
   });
 };
