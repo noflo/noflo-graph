@@ -22,3 +22,4 @@ exports.getComponent = ->
 
       output.sendDone
         out: graph
+    return
