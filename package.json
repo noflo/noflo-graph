@@ -15,7 +15,7 @@
     "noflo": "^1.4.0"
   },
   "devDependencies": {
-    "eslint": "^7.16.0",
+    "eslint": "^8.9.0",
     "eslint-config-airbnb-base": "^14.2.1",
     "eslint-plugin-import": "^2.22.1",
     "fbp-spec": "^0.8.0",
